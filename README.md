@@ -10,6 +10,7 @@ Connecting a standard router directly to the ONU without the BB Unit allows acce
 
 However, this approach is not an ideal solution for obtaining a stable IPv4 connection with a fixed IP address. After extensive research, I successfully configured high-speed IPv6 on OpenWrt. This article outlines the configuration process in hopes of assisting other SoftBank users facing similar challenges.
 
+---
 # SoftBank IPv4 over IPv6 Configuration Guide  
 
 ## Preparation  
@@ -20,12 +21,31 @@ To establish a connection using IPv4 over IPv6, you will need the following:
 - **Local IPv4 address**: `126.000.00.000`  
 - **Remote IPv6 address (Peer)**: `2400:2000:0:0:a000::00`  
 
+## Accessing SoftBank BB Unit  
+
 You can easily find your **local IPv6 and IPv4 addresses** after connecting the SoftBank BB Unit to the Internet.  
 
-!image
+### Step 1: Open the Router Admin Page  
+In your web browser, go to one of the following URLs:  
+
+- [http://172.16.255.254/index.html](http://172.16.255.254/index.html)  
+- [http://192.168.3.1](http://192.168.3.1)  
+
+### Step 2: Login Credentials  
+Use the following login details to access the SoftBank BB router:  
+
+- **Username**: `user`  
+- **Password**: `user`  
+
+### Example Interface  
+![img-01](https://github.com/user-attachments/assets/25773fef-bc81-4a80-97a3-44da659730a0)  
+
+Record these two addresses for future use.
+
+## Getting the remote IPv6 address (peer) 
 
 However, obtaining the **remote IPv6 address (peer)** is more challenging. When I contacted SoftBank Hikari customer support, they were unable to provide this information. Fortunately, you can determine the peer address by capturing network packets using **Wireshark**.  
 
----
+--
   
 For a detailed step-by-step guide, refer to the full documentation in this repository.  
