@@ -42,9 +42,34 @@ Use the following login details to access the SoftBank BB router:
 
 Record these two addresses for future use.
 
-## Getting the remote IPv6 address (peer) 
+## Getting the Remote IPv6 Address (Peer)  
 
-However, obtaining the **remote IPv6 address (peer)** is more challenging. When I contacted SoftBank Hikari customer support, they were unable to provide this information. Fortunately, you can determine the peer address by capturing network packets using **Wireshark**.  
+Obtaining the **remote IPv6 address (peer)** can be challenging, as SoftBank Hikari customer support does not provide this information. However, you can determine the peer address by capturing network packets using **Wireshark**.  
+
+### Steps to Capture the Peer IPv6 Address  
+
+1. **Connect your PC to the ONU**  
+   - Use an Ethernet cable to connect the **ONU LAN port** directly to your Windows PC.  
+
+2. **Start Packet Capture in Wireshark**  
+   - Open **Wireshark** and select the network adapter corresponding to your **PC’s LAN connection**.  
+   - Click **Start** to begin capturing packets.  
+
+3. **Stop and Analyze the Captured Packets**  
+   - Let the capture run for a while, then click **Stop**.  
+   - In the **Destination** column, look for packets sent to your previously identified **IPv4 address** (retrieved from the SoftBank BB router).  
+
+4. **Find the Peer IPv6 Address**  
+   - Click on the relevant packet.  
+   - Inside the packet details, locate **Internet Protocol Version 6 (IPv6)**.  
+   - Find the fields labeled **"Src"** (Source) and **"Dst"** (Destination).  
+   - The **"Src" (Source)** address is your peer IPv6 address—**note it down** for later use.  
+
+### Example:  
+![final](https://github.com/user-attachments/assets/1af7abd8-213c-4bc3-9246-99beb25a16d5)  
+
+## Configure OpenWrt
+To configure OpenWRT router you need to install flowing package to install `kmod-ip6-tunnel` `ds-lite` `ip-full`
 
 --
   
