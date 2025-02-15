@@ -10,6 +10,8 @@ Connecting a standard router directly to the ONU without the BB Unit allows acce
 
 However, this approach is not an ideal solution for obtaining a stable IPv4 connection with a fixed IP address. After extensive research, I successfully configured high-speed IPv6 on OpenWrt. This article outlines the configuration process in hopes of assisting other SoftBank users facing similar challenges.
 
+For a detailed step-by-step guide, refer to the full documentation in this repository.  
+
 ---
 # SoftBank IPv4 over IPv6 Configuration Guide  
 
@@ -68,9 +70,112 @@ Obtaining the **remote IPv6 address (peer)** can be challenging, as SoftBank Hik
 ### Example:  
 ![final](https://github.com/user-attachments/assets/1af7abd8-213c-4bc3-9246-99beb25a16d5)  
 
-## Configure OpenWrt
-To configure OpenWRT router you need to install flowing package to install `kmod-ip6-tunnel` `ds-lite` `ip-full`
+## Configuring OpenWrt  
 
---
-  
-For a detailed step-by-step guide, refer to the full documentation in this repository.  
+To set up your OpenWrt router, you need to install the following packages:  
+
+- `kmod-ip6-tunnel`  
+- `ds-lite`  
+- `ip-full`  
+- `luci-app-ttyd` (optional, but useful for enabling an SSH terminal in the LuCI web interface)  
+
+### Installation Steps  
+
+1. **Access the OpenWrt Web Interface (LuCI)**  
+   - Open the web interface ([http://192.168.1.1](http://192.168.1.1) or your default gateway IP) and navigate to **System > Software**.  
+
+2. **Update the Package List**  
+   - Click the **Update list** button to refresh the available packages.  
+
+3. **Install Required Packages**  
+   - Search for each of the packages listed above and install them one by one.  
+
+4. **Reboot the Router**  
+   - After installation, restart your router to apply the changes.  
+
+Installing `luci-app-ttyd` is optional but highly recommended, as it allows you to access the SSH terminal directly from LuCI, making configuration easier.  
+
+## Change wan `MAC` address
+                                                                  
+---
+ 
+## Configuring WAN6 (IPv6 Pass-Through)  
+
+**Navigate to WAN6 Settings**  Go to **Network > Interfaces** and click **Edit** on the `wan6` interface.  
+
+1. **Enable DHCP Server**  
+   - Open the **DHCP Server** tab.  
+   - If it's not active, enable **Set up DHCP Server**.  
+
+2. **General Setup**  
+   - Check **Ignore interface**.  
+
+3. **IPv6 Settings**  
+   - Go to the **IPv6 Settings** tab.  
+   - Check **Designated master**.  
+   - Set **Relay mode** to all options.  
+
+   ![WAN6 Config](https://github.com/user-attachments/assets/992cf2ed-8191-4de4-a4ba-ef77aa7e554b)  
+
+4. **Firewall Settings**  
+   - Go to the **Firewall Settings** tab and set the **wan** zone.  
+
+   ![WAN Firewall](https://github.com/user-attachments/assets/f6357ba3-93dd-4b47-8678-7e8f778c724e)  
+
+---
+
+## Configuring LAN  
+
+**Navigate to LAN Settings** Go to **Network > Interfaces** and click **Edit** on the `lan` interface.  
+
+1. **General Setup**  
+   - **Uncheck** **Ignore interface**.  
+
+2. **Advanced Settings**  
+   - Set the DNS servers to be used by DHCP under **DHCP-Options**:  
+     ```
+     6,8.8.8.8,1.1.1.1
+     ```  
+
+   ![LAN DHCP Options](https://github.com/user-attachments/assets/9f3c4fcb-0cef-4589-857c-16425a574aee)  
+
+3. **IPv6 Settings**  
+   - Go to the **IPv6 Settings** tab.  
+   - **Uncheck** **Designated master**.  
+   - Set **DHCPv6 Service** to **Server mode**.  
+   - Everything else should be set to **Relay mode**.  
+   - In **Announced IPv6 DNS servers**, enter the public IPv6 DNS addresses:  
+
+     ```
+     2001:4860:4860::8888  # Google
+     2606:4700:4700::1111  # Cloudflare
+     ```  
+
+   - Do not check **NDP-Proxy slave**.  
+
+   ![LAN IPv6 Settings](https://github.com/user-attachments/assets/0b752448-eb08-4bcd-ae52-e9c63f6de4b8)  
+
+4. **Firewall Settings**  
+   - Go to the **Firewall Settings** tab and set the **lan** zone.  
+
+   ![LAN Firewall](https://github.com/user-attachments/assets/152f1fad-06b5-4657-a8b4-7ca4efa94bba)
+
+---
+
+## Configuring WAN
+
+**Navigate to LAN Settings** Go to **Network > Interfaces** and click **Edit** on the `lan` interface.  
+
+
+
+## Testing tool 
+* https://ip.sb/
+* https://test-ipv6.com/index.html.ja_JP
+
+## Acknowledgments
+Inspiration, code snippets, etc.
+* https://wp.hima-jin.info/openwrt-ds-lite/
+* https://layer3.info/softbankhikari-bbunit-less/
+* https://akashisn.hatenablog.com/entry/2022/03/19/152726
+* https://qiita.com/kouhei-ioroi/items/cf0c6228c5c1faef415a
+* https://blog.missing233.com/2023/09/16/softbank-hikari-openwrt-configuration/
