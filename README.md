@@ -67,8 +67,8 @@ Obtaining the **remote IPv6 address (peer)** can be challenging, as SoftBank Hik
    - Find the fields labeled **"Src"** (Source) and **"Dst"** (Destination).  
    - The **"Src" (Source)** address is your peer IPv6 address—**note it down** for later use.  
 
-### Example:  
-![final](https://github.com/user-attachments/assets/1af7abd8-213c-4bc3-9246-99beb25a16d5)  
+### Example:   
+![final](https://github.com/user-attachments/assets/bdd7926e-1314-4bd7-a1f0-c562c4b8abbb)
 
 ## Configuring OpenWrt  
 
@@ -96,7 +96,10 @@ To set up your OpenWrt router, you need to install the following packages:
 Installing `luci-app-ttyd` is optional but highly recommended, as it allows you to access the SSH terminal directly from LuCI, making configuration easier.  
 
 ## Change wan `MAC` address
-                                                                  
+
+![Screenshot 2025-02-16 at 7 34 44 AM](https://github.com/user-attachments/assets/7591fdb6-e7a6-4812-b239-54e4c8e0b427)
+![Screenshot 2025-02-16 at 11 46 59 AM](https://github.com/user-attachments/assets/4f5d6d52-e391-4f28-bdf3-ba7e47a4feed)
+                                                                 
 ---
  
 ## Configuring WAN6 (IPv6 Pass-Through)  
@@ -165,6 +168,25 @@ Installing `luci-app-ttyd` is optional but highly recommended, as it allows you 
 ## Configuring WAN
 
 **Navigate to LAN Settings** Go to **Network > Interfaces** and click **Edit** on the `lan` interface.  
+![Screenshot 2025-02-16 at 0 49 38 PM](https://github.com/user-attachments/assets/8066839c-c917-4c37-8865-ff80c6afe674)
+![Screenshot 2025-02-16 at 0 50 06 PM](https://github.com/user-attachments/assets/78e47432-8b8d-4471-9f7d-c4bd2a253b82)
+![Screenshot 2025-02-16 at 0 50 37 PM](https://github.com/user-attachments/assets/840a885b-d5db-47bf-aae0-11b2848a0527)
+![Screenshot 2025-02-16 at 0 50 56 PM](https://github.com/user-attachments/assets/caa82f5d-6955-4923-b702-d4ba8029a020)
+
+
+## Create and Configuring IPIPv6
+![Screenshot 2025-02-16 at 11 47 56 AM](https://github.com/user-attachments/assets/16304545-3216-423b-a997-351bdaa75540)
+![Screenshot 2025-02-16 at 11 48 13 AM](https://github.com/user-attachments/assets/b082f736-c341-4fd5-afa4-dfca7b29b169)
+![Screenshot 2025-02-16 at 11 49 00 AM](https://github.com/user-attachments/assets/19862950-87b3-4d32-afbf-fbd0b0910ba7)
+![Screenshot 2025-02-16 at 11 49 16 AM](https://github.com/user-attachments/assets/1adfb34a-79d6-41f8-a878-5b3f9bf0513a)
+
+
+## All Interface
+![Screenshot 2025-02-16 at 11 49 52 AM](https://github.com/user-attachments/assets/38b8f500-14b3-4f05-a968-dc801ff40eca)
+![Screenshot 2025-02-16 at 11 50 36 AM](https://github.com/user-attachments/assets/a224727f-9f2e-4ef3-8e83-1735c3f6cd1c)
+
+## Check connection
+![checkConnction](https://github.com/user-attachments/assets/fcb78a1e-0ca1-4682-8321-dc847960c26e)
 
 
 
