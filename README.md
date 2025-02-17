@@ -1,4 +1,4 @@
-# Configuring OpenWrt to work with Japan SoftBank hikari IPv6 high-speed internet "IPv4 over IPv6" service
+# Configuring OpenWrt to work with Japan SoftBank Hikari IPv6 high-speed internet ("IPv4 over IPv6") service
 
 ## The Brackground 
 
@@ -95,11 +95,27 @@ To set up your OpenWrt router, you need to install the following packages:
 
 Installing `luci-app-ttyd` is optional but highly recommended, as it allows you to access the SSH terminal directly from LuCI, making configuration easier.  
 
-## Change wan `MAC` address
+## Changing the WAN `MAC` Address  
 
-![Screenshot 2025-02-16 at 7 34 44 AM](https://github.com/user-attachments/assets/7591fdb6-e7a6-4812-b239-54e4c8e0b427)
-![Screenshot 2025-02-16 at 11 46 59 AM](https://github.com/user-attachments/assets/4f5d6d52-e391-4f28-bdf3-ba7e47a4feed)
-                                                                 
+To ensure proper connectivity, you need to change your OpenWrt router's **WAN MAC address** to match the **SoftBank BB Unit's MAC address**.  
+
+### Steps to Change the WAN MAC Address  
+
+1. **Find the SoftBank BB MAC Address**  
+   - Access your **SoftBank BB Unit** and locate the **MAC address** (usually found in the router's label).  
+   - **Note it down** for later use.  
+
+2. **Update the MAC Address in OpenWrt**  
+   - Navigate to **Network > Device** in the OpenWrt web interface.  
+   - Find and **Configure** the WAN interface.
+     
+![MAC Address Config 1](https://github.com/user-attachments/assets/7591fdb6-e7a6-4812-b239-54e4c8e0b427)  
+
+   - In the **MAC address** section, enter the **SoftBank BB Unit’s MAC address**.  
+   - Save the changes and apply the configuration.
+     
+![MAC Address Config 2](https://github.com/user-attachments/assets/4f5d6d52-e391-4f28-bdf3-ba7e47a4feed)  
+                                                               
 ---
  
 ## Configuring WAN6 (IPv6 Pass-Through)  
@@ -165,14 +181,39 @@ Installing `luci-app-ttyd` is optional but highly recommended, as it allows you 
 
 ---
 
-## Configuring WAN
+## Configuring WAN  
 
-**Navigate to LAN Settings** Go to **Network > Interfaces** and click **Edit** on the `lan` interface.  
-![Screenshot 2025-02-16 at 0 49 38 PM](https://github.com/user-attachments/assets/8066839c-c917-4c37-8865-ff80c6afe674)
-![Screenshot 2025-02-16 at 0 50 06 PM](https://github.com/user-attachments/assets/78e47432-8b8d-4471-9f7d-c4bd2a253b82)
-![Screenshot 2025-02-16 at 0 50 37 PM](https://github.com/user-attachments/assets/840a885b-d5db-47bf-aae0-11b2848a0527)
-![Screenshot 2025-02-16 at 0 50 56 PM](https://github.com/user-attachments/assets/caa82f5d-6955-4923-b702-d4ba8029a020)
+Follow these steps to configure the **WAN** settings in OpenWrt.  
 
+1. **Navigate to WAN Interface**  
+   - Go to **Network > Interfaces** in the OpenWrt web interface.  
+   - Click **Edit** on the `wan` interface.  
+
+2. **General Settings**
+   - Ensure the correct **protocol** is selected for your WAN connection.  
+   - Enter the **IPv4 address** that you found earlier and also add **IPv4 netmask**.  
+
+![Step 1](https://github.com/user-attachments/assets/8066839c-c917-4c37-8865-ff80c6afe674)  
+
+3. **Advanced Settings**
+   - Add a **custom DNS server**. Here, Google’s DNS is used.  
+   - Leave other settings as **default**.  
+
+![Step 2](https://github.com/user-attachments/assets/78e47432-8b8d-4471-9f7d-c4bd2a253b82)  
+
+4. **Firewall Settings**
+   - Assign the **WAN** interface to the appropriate **firewall zone**.  
+   - This ensures proper routing and security for inbound and outbound traffic.  
+
+![Step 3](https://github.com/user-attachments/assets/840a885b-d5db-47bf-aae0-11b2848a0527)  
+
+5. DHCP Server  
+   - **Uncheck** **Designated master**.  
+   - Set all options to **disabled**.  
+
+![Step 4](https://github.com/user-attachments/assets/caa82f5d-6955-4923-b702-d4ba8029a020)  
+
+---
 
 ## Create and Configuring IPIPv6
 ![Screenshot 2025-02-16 at 11 47 56 AM](https://github.com/user-attachments/assets/16304545-3216-423b-a997-351bdaa75540)
