@@ -283,9 +283,10 @@ Your **IPIPv6 tunnel** is now successfully configured! 🚀
 
 ## All Interface
 ![Screenshot 2025-02-16 at 11 49 52 AM](https://github.com/user-attachments/assets/38b8f500-14b3-4f05-a968-dc801ff40eca)
+## Confirm that the configuration is normal
 ![Screenshot 2025-02-16 at 11 50 36 AM](https://github.com/user-attachments/assets/a224727f-9f2e-4ef3-8e83-1735c3f6cd1c)
 
-## Check connection
+## Check connection[SUCCESS!!]
 ![checkConnction](https://github.com/user-attachments/assets/fcb78a1e-0ca1-4682-8321-dc847960c26e)
 
 
