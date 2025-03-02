@@ -215,12 +215,71 @@ Follow these steps to configure the **WAN** settings in OpenWrt.
 
 ---
 
-## Create and Configuring IPIPv6
-![Screenshot 2025-02-16 at 11 47 56 AM](https://github.com/user-attachments/assets/16304545-3216-423b-a997-351bdaa75540)
-![Screenshot 2025-02-16 at 11 48 13 AM](https://github.com/user-attachments/assets/b082f736-c341-4fd5-afa4-dfca7b29b169)
-![Screenshot 2025-02-16 at 11 49 00 AM](https://github.com/user-attachments/assets/19862950-87b3-4d32-afbf-fbd0b0910ba7)
-![Screenshot 2025-02-16 at 11 49 16 AM](https://github.com/user-attachments/assets/1adfb34a-79d6-41f8-a878-5b3f9bf0513a)
+## Creating and Configuring IPIPv6  
 
+Follow these steps to set up **IPIPv6** on OpenWrt.  
+
+### 1. Create a New Interface  
+- Navigate to **Network > Interfaces** in the OpenWrt web interface.  
+- Click **Add new interface** Name **v6tun0** and select **IPv4 over IPv6**.  
+
+![Step 1](https://github.com/user-attachments/assets/16304545-3216-423b-a997-351bdaa75540)  
+
+### 2. Configure the IPIPv6 Tunnel  
+- Enter the **Remote IPv6 Address(peer), Local IPv4 Address and Local IPv6 Address** that you found earlier.  
+- Click **Save & Apply**.  
+
+![Step 2](https://github.com/user-attachments/assets/b082f736-c341-4fd5-afa4-dfca7b29b169)  
+
+### 3. Advanced Settings and Adjust Firewall Settings  
+- Keep most **Advanced Settings** at their **default** values.
+- Assign the new **IPIPv6 interface** to the correct firewall zone.  
+
+![Step 3](https://github.com/user-attachments/assets/19862950-87b3-4d32-afbf-fbd0b0910ba7)  
+![Step 4](https://github.com/user-attachments/assets/1adfb34a-79d6-41f8-a878-5b3f9bf0513a)  
+
+### 4. Add a startup script  
+- This script configures an **IPv6-in-IPv6 (IPIPv6) tunnel** to enable **IPv4 over IPv6** connectivity.
+1. **Access the OpenWrt Terminal**  
+   You can add the script using either the **Web Interface** or **SSH**.  
+
+   - **Web Interface**:  
+     - Navigate to **Services > Terminal** in OpenWrt.  
+     - *(Requires the installation of the `luci-app-ttyd` package)*.  
+     ![Step 5](https://github.com/user-attachments/assets/7fffc8a4-4769-4449-bf41-41591199d329)  
+
+   - **SSH**: *(Only required if using SSH; if using the Web Interface, this is not necessary)*  
+     - Connect to the router via SSH:  
+       ```ssh root@your-default-ip ```
+     - Enter your root password.
+
+2. **Add the Startup Script**  
+   - Open the startup script file using `vi` or `nano`:  
+     ```sh
+     vi /etc/rc.local
+     ```
+     *(Some systems may use `/etc/rc.d/rc.local`)*.  
+
+   - Replace `your_peer_address`, `your_ipv4_address`, and `your_ipv6_address` with the respective values and then paste the following script **before** `exit 0`:  
+     ```sh
+     INTERFACE=wan
+     IPV6_PEER="your_peer_address"
+     IPV4_ENDPOINT="your_ipv4_address"
+     IPV6_ENDPOINT="your_ipv6_address"
+     
+     ip -6 addr add $IPV6_ENDPOINT dev $INTERFACE
+     ip -6 tunnel add v6tun0 mode ipip6 remote $IPV6_PEER local $IPV6_ENDPOINT dev $INTERFACE encaplimit none
+     ip addr add $IPV4_ENDPOINT dev v6tun0
+     ip route add default dev v6tun0
+     ip link set dev v6tun0 up
+     ```
+
+     ![Step 6](https://github.com/user-attachments/assets/43e789ff-8787-46cc-84de-93e95c6b9016)  
+
+   - Reboot the router if necessary to apply all changes.  
+ 
+
+Your **IPIPv6 tunnel** is now successfully configured! 🚀 
 
 ## All Interface
 ![Screenshot 2025-02-16 at 11 49 52 AM](https://github.com/user-attachments/assets/38b8f500-14b3-4f05-a968-dc801ff40eca)
