@@ -279,7 +279,7 @@ Follow these steps to set up **IPIPv6** on OpenWrt.
    - Reboot the router if necessary to apply all changes.  
  
 
-Your **IPIPv6 tunnel** is now successfully configured! 🚀 
+Your **OpenWRT Router** is now successfully configured! 🚀 
 
 ## All Interface
 ![Screenshot 2025-02-16 at 11 49 52 AM](https://github.com/user-attachments/assets/38b8f500-14b3-4f05-a968-dc801ff40eca)
